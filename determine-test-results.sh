@@ -1,4 +1,5 @@
 input=results
+cat $input
 while IFS= read -r i
 do
     status_code=$(echo $i | cut -d':' -f2 | sed 's/ //g')
