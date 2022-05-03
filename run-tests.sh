@@ -8,8 +8,14 @@ elif [[ "$test_type" == "" ]]; then
     test_type="basic"
 fi
 
-status_code=0
-for i in $(find build -name "test_*" | grep /out/); do
+binaries=$(find build -name "test_*" | grep /out/)
+if [[ "$binaries" == "" ]]
+then
+    echo "compiled binaries don't exist, failing job"
+    exit 1
+fi
+
+for i in $binaries; do
     $base_command $i
     # echo results with colors
     echo "$test_type test for $i returned: $?" >>$res_file
